@@ -1,62 +1,82 @@
 body {
     font-family: "Kumbh Sans";
     color: rgb(50, 50, 50);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .buttonHolder {
     display: grid;
-    grid-template-columns: auto auto auto;
-    padding-left: 20%;
-    padding-right: 20%;
-    gap:1vw;
+    grid-template-columns: repeat(3, 100px);
+    gap:0.5rem;
+    width: fit-content;
+    
 }
 
 .button {
-    border-radius: 100px;
-    padding: 1%;
+    border-radius: 10px;
     cursor: pointer;
+    border: none;
     transition: 0.3s;
-    /* aspect-ratio: 3/1; */
+    aspect-ratio: 1;
     background-color: var(--default-color);
+    color: var(--text-color);
     font-family: "Kumbh Sans";
+    box-shadow: 2px 2px 4px lightgray;
 }
 .button:hover {
     background-color: var(--hover-color);
+    transform: scale(1.1);
 }
 
 .pink {
     --default-color: pink;
     --hover-color: rgb(255, 230, 234);
+    --text-color: rgb(152, 65, 80);
 }
 .lightblue {
     --default-color: lightblue;
     --hover-color: rgb(227, 243, 249);
+    --text-color: rgb(9, 125, 163);
 }
 .lightgreen {
     --default-color: lightgreen;
     --hover-color: rgb(231, 248, 231);
+    --text-color:rgb(11, 95, 11);
 }
 .yellow {
     --default-color: yellow;
     --hover-color: rgb(250, 250, 187);
+    --text-color:rgb(110, 110, 0);
 }
 .lightcoral {
     --default-color: lightcoral;
     --hover-color: rgb(247, 204, 204);
+    --text-color: rgb(138, 55, 55);
 }
 .mediumslateblue {
     --default-color: mediumslateblue;
     --hover-color: rgb(212, 205, 248);
+    --text-color: rgb(14, 3, 74);
 }
 .mediumseagreen {
     --default-color: mediumseagreen;
     --hover-color: rgb(194, 255, 221);
+    --text-color: rgb(9, 82, 42);
 }
 .deepskyblue {
     --default-color: deepskyblue;
     --hover-color: rgb(188, 236, 252);
+    --text-color: rgb(0, 60, 255);
 }
 .violet {
     --default-color: violet;
     --hover-color: rgb(251, 205, 251);
+    --text-color: rgb(123, 26, 159);
+}
+.lightgray {
+    --default-color: lightgray;
+    --hover-color: rgb(233, 233, 233);
+    --text-color: rgb(68, 68, 68);
 }
