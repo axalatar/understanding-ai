@@ -29,6 +29,9 @@ body {
     background-color: var(--hover-color);
     transform: scale(1.1);
 }
+.active {
+    transform: scale(0.9);
+}
 
 .pink {
     --default-color: pink;
