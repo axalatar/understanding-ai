@@ -1,3 +1,12 @@
+:root::-webkit-scrollbar {
+    display: none;
+}
+  
+:root {
+    -ms-overflow-style: none;
+    scrollbar-width: none
+}
+
 body {
     font-family: "Kumbh Sans";
     color: rgb(50, 50, 50);
