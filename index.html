@@ -2,37 +2,173 @@
 <html lang="en">
 
 <head>
-    <title>Understanding AI</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Lexend:wght@100..900&display=swap"
-        rel="stylesheet">
+  <title>Understanding AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Lexend:wght@100..900&display=swap"
+    rel="stylesheet">
+  <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
 </head>
 
 <body>
-    <h1 style="color: rgb(0, 76, 255); font-size:40px; margin: 0;">Understanding AI</h1>
-    <p style="color: gray; font-size:20px; margin: 0;">What really is AI?</p>
+  <h1 style="color: rgb(0, 76, 255); font-size:40px; margin: 0;">Understanding AI</h1>
+  <p style="color: gray; font-size:20px; margin: 0;">What really is AI?</p>
 
-    <div style="margin:1rem; display:flex; align-items:center">
-        <button id="intro" class="lightgray button active">Intro</button>
-    </div>
+  <div style="margin:1rem; display:flex; align-items:center">
+    <button id="intro" class="lightgray button active">Intro</button>
+  </div>
 
-    <div class="buttonHolder">
-        <button id="k-nearest" class="pink button">K-Nearest Neighbors</button>
-        <button id="linear-regression" class="lightblue button">Linear Regression</button>
-        <button id="logistic-regression" class="lightgreen button">Logistic Regression</button>
-        <button id="decision-trees" class="yellow button">Decision Trees</button>
-        <button id="svm" class="lightcoral button">SVM</button>
-        <button id="mlp" class="mediumslateblue button">MLP</button>
-        <button id="rnn" class="mediumseagreen button">RNN</button>
-        <button id="cnn" class="deepskyblue button">CNN</button>
-        <button id="q-learning" class="violet button">Q-Learning</button>
-    </div>
+  <div class="buttonHolder">
+    <button id="k-nearest" class="pink button">K-Nearest Neighbors</button>
+    <button id="linear-regression" class="lightblue button">Linear Regression</button>
+    <button id="logistic-regression" class="lightgreen button">Logistic Regression</button>
+    <button id="decision-trees" class="yellow button">Decision Trees</button>
+    <button id="svm" class="lightcoral button">SVM</button>
+    <button id="mlp" class="mediumslateblue button">MLP</button>
+    <button id="rnn" class="mediumseagreen button">RNN</button>
+    <button id="cnn" class="deepskyblue button">CNN</button>
+    <button id="q-learning" class="violet button">Q-Learning</button>
+  </div>
 
-    <div id="contentHolder"></div>
+  <div id="intro-content" class="content">
+    <h1>Introduction</h1>
+    <p>
+      This guide will give you a basic overview of some different kinds of AI. This is not a comprehensive
+      overview, and doesn't go too deep into many of the technical details.
+    </p>
+    <p>
+      AI is, by definition, just some kind of artifical intelligence. This means, obviously, some program that can
+      somehow emulate what a real intelligent person might be able to do. This can mean playing a video game,
+      recognizing cancer cells, generating text (eg chatgpt), or anything else.
+    </p>
+    <p>
+      In practice, this usually means taking some data and 'teaching' the machine to recognize or imitate a
+      pattern in it. The way the machine learns the pattern is determined by the type of AI used. In this guide,
+      we'll go over some of these kinds.
+    </p>
+  </div>
+
+  <!-- <div id="container"></div> -->
+
+
+  <div id="k-nearest-content" class="content">
+    <h1>K-Nearest Neighbors</h1>
+    <p>K-Nearest neighbors is a relatively simple classification or regression algorithm. It takes a set of labeled
+      points, and when finding a new value, it assigns it to be whatever the majority of the nearest k neighbors
+      are, where k is a hyperparameter (a pre-set number, constant throughout the process of running the
+      algorithm).</p>
+    <p>K-Nearest neighbors usually uses euclidean distance (just a straight line), but it can also use other
+      distance functions like taxicab (only moving with horizontal/vertical lines) or more complex ones.</p>
+
+    <p>Try playing with the k=3 simulation below; you can drag around the circle with a black outline. It has two
+      parameters and two output classes; you could imagine it as, for example, determining whether an animal is a
+      reptile or mammal based on its body heat (x-axis) and tongue length (y-axis). Most networks will need more output
+      classes and paramaters, so they would have more than just blue and red and would need more than two dimensions in
+      the graph.</p>
+
+    <svg id="knn-graph" width="600" height="400"></svg>
+
+    <script type="module">
+      import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+      const svg = d3.select("#knn-graph");
+      const width = 600;
+      const height = 400;
+      const k = 3; // there should prob be a slider for this but ehhh
+
+      const data = d3.range(20).map((i) => ({
+        x: i == 0 ? width / 2 : Math.random() * width,
+        y: i == 0 ? height / 2 : Math.random() * height,
+        label: Math.random() > 0.5 ? "A" : "B",
+        draggable: i == 0
+      }));
+
+      // i only kinda understand this?? thanks to all the forums i piecemealed this together from
+      const points = svg.selectAll(".point") // getting the list of elements with .point
+        .data(data) // then, set that to data
+        .enter() // create new dom elements for the data 
+        .append("circle") // makes a circle element for each data point
+        .attr("class", "point") // gives each of those circles the .point class
+        .attr("r", 10) // set some attributes
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("fill", d => d.label == "A" ? "blue" : "red")
+        .style("stroke", d => d.draggable ? "black" : "none")
+        .style("stroke-width", d => d.draggable ? 2 : 0)
+        .call(d3.drag()
+          .filter((event, d) => d.draggable)
+          .on("drag", function (event, d) {
+            d.x = event.x;
+            d.y = event.y;
+            d3.select(this) // ok so this is just saying that it's referring to the dom element being dragged rn
+              .attr("cx", d.x)
+              .attr("cy", d.y);
+            update(d);
+          }));
+
+      const linesGroup = svg.append("g").attr("class", "lines-group"); // append("g") is a <g>
+      const distancesGroup = svg.append("g").attr("class", "distances-group");
+
+      function classify(point) {
+        const distances = data.filter(d => d != point).map(d => ({
+          distance: Math.sqrt((point.x - d.x) ** 2 + (point.y - d.y) ** 2),
+          label: d.label,
+          x: d.x,
+          y: d.y
+        }));
+
+        distances.sort((a, b) => a.distance - b.distance);
+        return distances.slice(0, k);
+      }
+
+      function update(point) {
+        const nearestNeighbors = classify(point);
+
+        const newLabel = nearestNeighbors.filter(d => d.label == "A").length > k / 2 ? "A" : "B";
+
+        d3.select(points.nodes()[data.indexOf(point)])
+          .attr("fill", newLabel === "A" ? "blue" : "red");
+
+        linesGroup.selectAll("line").remove();
+        distancesGroup.selectAll("text").remove();
+
+        nearestNeighbors.forEach(neighbor => {
+          linesGroup.append("line")
+            .attr("class", "line")
+            .attr("x1", point.x)
+            .attr("y1", point.y)
+            .attr("x2", neighbor.x)
+            .attr("y2", neighbor.y)
+            .style("stroke", "gray")
+            .style("stroke-width", 1);
+
+          distancesGroup.append("text")
+            .attr("class", "distance-label")
+            .attr("x", (point.x + neighbor.x) / 2)
+            .attr("y", (point.y + neighbor.y) / 2 - 5)
+            .text(neighbor.distance.toFixed(2));
+        });
+      }
+
+
+      points.attr("fill", d => d.label === "A" ? "blue" : "red");
+      // update();
+
+    </script>
+
+  </div>
+  <div id="linear-regression-content" class="content"></div>
+  <div id="logistic-regression-content" class="content">Logistic Regression</div>
+  <div id="decision-trees-content" class="content">Decision Trees</div>
+  <div id="svm-content" class="content">SVM</div>
+  <div id="mlp-content" class="content">MLP</div>
+  <div id="rnn-content" class="content">RNN</div>
+  <div id="cnn-content" class="content">CNN</div>
+  <div id="q-learning-content" class="content">Q-Learning</div>
+
 </body>
 
 <script src="main.js"></script>
+
 </html>

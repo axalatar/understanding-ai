@@ -1,18 +1,15 @@
 const buttons = document.querySelectorAll('button');
-const content = document.getElementById('contentHolder');
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
+        buttons.forEach(b => {
+            b.classList.remove('active');
+            document.getElementById(b.id + "-content").style.display = "none";
+    });
         button.classList.add('active'); 
 
-        fetch("content/" + button.id + ".html").then(response => {
-            if(response.ok) {
-                return response.text();
-            }
-        }).then(response => {
-            content.innerHTML = response;
-            content.scrollIntoView({block: 'start', behavior: "smooth"})
-        })
+        const content = document.getElementById(button.id + "-content");
+        content.style.display = "flex";
+        content.scrollIntoView({block: 'start', behavior: "smooth"})
     });
 });
