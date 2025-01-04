@@ -9,7 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Lexend:wght@100..900&display=swap"
     rel="stylesheet">
-  <!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -47,6 +47,9 @@
       In practice, this usually means taking some data and 'teaching' the machine to recognize or imitate a
       pattern in it. The way the machine learns the pattern is determined by the type of AI used. In this guide,
       we'll go over some of these kinds.
+    </p>
+    <p>
+      Two common uses of AI are regression: finding a continuous value, ie a number, like the size of an animal; and classification, assigning a discrete label to a value like whether an email is spam or not.
     </p>
   </div>
 
@@ -158,14 +161,122 @@
     </script>
 
   </div>
-  <div id="linear-regression-content" class="content"></div>
-  <div id="logistic-regression-content" class="content">Logistic Regression</div>
-  <div id="decision-trees-content" class="content">Decision Trees</div>
-  <div id="svm-content" class="content">SVM</div>
-  <div id="mlp-content" class="content">MLP</div>
-  <div id="rnn-content" class="content">RNN</div>
-  <div id="cnn-content" class="content">CNN</div>
-  <div id="q-learning-content" class="content">Q-Learning</div>
+  <div id="linear-regression-content" class="content">
+    <h1>Linear Regression</h1>
+    <p>
+      Linear regression is a more complex form of regression. It solves for the best linear line (ie. y=mx+b) to minimize the error from some set of data points.
+    </p>
+    <p>
+      Effectively, this means solving for the best m and the best b. There are many different algorithms for finding these variables, such as ordinary least squares. There are also different error functions, which the algorithm tries to minimize; the most widely used is the MSE, or mean-squared-error, but MAE (mean-absolute-error) is also common.
+    </p>
+    <p>
+      Linear regression is extended to more than just two dimensions by making the equation \(x_1m_1 + x_2m_2 + x_3m_3 + ... + x_nm_n\) for \(n\) dimensions, where each \(m\) is one more variable the AI will try to optimize and each \(x\) is one more input.
+    </p>
+    <p>
+      Linear regression is very effective at finding future values for systems that can be modeled linearly, and has a wide range of uses.
+    </p>
+  </div>
+  <div id="logistic-regression-content" class="content">
+    <h1>Logistic Regression</h1>
+    <p>
+      Logistic regression is very similar to linear regression, but rather than modelling a curve it models the sigmoid function, a special case of the logistic function.
+    </p>
+    <p>
+      The sigmoid function is a curve between 0 and 1, defined by \(\frac{1}{1+e^{-z}}\). \(z=mx+b\), or a more complex equation similar to linear regression if more dimensions are needed.
+    </p>
+    <p>
+      The special use of logistic regression is to allow classification, rather than regression; because all values of the sigmoid function are between 1 and 0, they can be interpreted as a probability. Then, by checking whether the value is above or below the halfway mark (0.5), you can check if the input is labeled by some classification.
+    </p>
+    <p>
+      This can be generalized to more than just one classification (more than just a 'binary' problem) by using the softmax function rather than the sigmoid function; softmax allows the network to output probabilities for multiple categories.
+    </p>
+  </div>
+  <div id="decision-trees-content" class="content">
+    <h1>Decision Trees</h1>
+    <p>
+      Decision trees are a relatively simple to implement classification algorithm which can still yield good results. They are essentially a 'tree' of nodes, each of which are an if-then statement of checking whether the value is less than some value, and at the bottom level of each path there is a 'leaf' node which leads to some final classification.
+    </p>
+    <p>
+      This essentially partitions the graph into many different classifications, cutting it up into many different rectangles which each have some label attached. 
+    </p>
+    <p>
+      Because of their simplicity, decision trees often overfit the data, fitting the tree far too closely to the data points to be useful for other data. There are some methods, like pruning (removing unnecessary branches) which help, as well as more complex ones like combining trees with methods like random forests.
+    </p>
+  </div>
+  <div id="svm-content" class="content">
+    <h1>Support Vector Machines</h1>
+    <p>
+      Support vector machines (SVM) are a classification algorithm. They find the best line (or, in higher dimensions, hyperplane) to seperate the classes onto different sides and maximize their distances from the line.
+    </p>
+    <img src="images/svm.png" width="600" height="400">
+
+    <p>
+      The algorithm gets its name from its 'support vectors', which each pass through a data point.
+    </p>
+    <p>
+      SVMs are very effective at modeling linear systems, and are widely used. For nonlinear systems, SVMs can be used when applying the "kernel trick", a method to turn the original nonlinear system into a linear one in higher dimensions. Common ones are polynomials, radials, and sigmoids (just like for logistic regression!).
+    </p>
+  </div>
+  <div id="mlp-content" class="content">
+    <h1>Multilayer Perceptrons</h1>
+    <p>
+      Multilayer perceptrons (MLPs) are one of the most versatile and widely used AI algorithms, and are the basis of modern deep learning.
+    </p>
+    <p>
+      MLPs are networks of nodes, each of which is connected to each node of the following layer. Each of these connections have a 'weight', which says how much that connection matters, and each node has a 'bias', an initial push in some direction.
+    </p>
+    <p>
+      The network is inputted to by setting the values in the first layer, and outputs are found by doing a forward pass through each layer and eventually leaving values in the last layer. This means an MLP can have an arbitrary number of inputs, outputs, and layers between them (also called 'hidden layers', for some reason). This allows MLPs to be scaled up significantly-- however, having too many hidden layers often leads to overfitting.
+    </p>
+    <p>
+      Once forward passes have been done, the MLP goes through a backward pass, also called backpropagation, where it adjusts all of its weights and biases to better fit each datapoint of input and output. 
+    </p>
+    <p>
+      An MLP can do both classification and regression; it can output just continuous values, but those continuous values can also be put through a softmax function to turn it into classification.
+    </p>
+  </div>
+  <div id="rnn-content" class="content">
+    <h1>Recursive Neural Networks</h1>
+
+    <p>
+      Recursive neural networks (RNNs) are a special type of neural network which specializes in sequential data, such as text (one word after another) or timed events (one event after another). 
+    </p>
+    <p>
+      RNNs can 'remember' previous inputs much better than MLPs and many other types of networks, allowing them to better deal with sequential data. This comes from their recursive hidden layer (which is their namesake), which takes both the current values and previous outputs as inputs. This allows it to use all the values as context, making it much better at things like text creation.
+    </p>
+    <p>
+      Recently, RNNs have been mostly replaced with transformers, a more advanced algorithm which is more efficient and effective at text generation.
+    </p>
+  </div>
+  <div id="cnn-content" class="content">
+    <h1>Convolutional Neural Networks</h1>
+    <p>
+      Convolutional neural networks (CNNs) are a type of neural network that specializes in recognizing specific features in images. It uses three types of layers: a convolution layer, a pooling layer, and feedforward layers.
+    </p>
+    <p>
+      The convolution layer applies a kernel; a small matrix which applies some 'filter'; to each subset of equal size in the input matrix.
+    </p>
+    <img src="images/cnn.png" height="400" width="600">
+    <p>
+      This kernel is optimized by the network to make the resulting image 'sharpened'; it gives the highest values to the most important parts of the image. 
+    </p>
+    <p>
+      Then, in the pooling layer, the maximum values in each section of the matrix are combined into a new smaller matrix. Although this loses a lot of information, it raises efficiency a lot and helps prevent overfitting.
+    </p>
+    <img src="images/pooling.png" height="400" width="600">
+    <p>
+      Then, this final matrix is passed through some number of fully-connected layers (like those in an MLP), which lead to a final output layer. These can be interpreted as the probability the image has whatever feature that output is correlated to.
+    </p>
+  </div>
+  <div id="q-learning-content" class="content">
+    <h1>Q-Learning</h1>
+    <p>
+      Q-learning is a type of reinforcement learning. Reinforcement learning, unlike supervised learning which tries to model some function given the inputs and outputs, tries to find the best function for an agent in an environment. This often is used for trying to train an AI to play video games, by letting the AI control the game and having it try to maximize its score in the game.
+    </p>
+    <p>
+      Q-learning is an algorithm in which the network tries to find the Q-values of actions in an environment through trial and error, and then uses them to find the optimal path. A Q-value of an action is the expected cumulative reward of taking it and then following the optimal path. The algorithm finds these by finding rewards for some actions, and then balances exploitation (choosing the best known Q-value) and exploration (choosing unknown values and finding new Q-values) until it converges on an optimal or near-optimal policy.
+    </p>
+  </div>
 
 </body>
 
