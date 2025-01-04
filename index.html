@@ -131,7 +131,7 @@
 
         const newLabel = nearestNeighbors.filter(d => d.label == "A").length > k / 2 ? "A" : "B";
 
-        d3.select(points.nodes()[data.indexOf(point)])
+        d3.select(points.nodes()[0])
           .attr("fill", newLabel === "A" ? "blue" : "red");
 
         linesGroup.selectAll("line").remove();
